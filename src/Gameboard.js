@@ -1,6 +1,6 @@
 import React from 'react';
 import GameboardCell from './GameboardCell'; 
-import { getNewBoard } from './helpers';
+import { getNewBoard, validateMove, doMoves } from './helpers';
 
 
 class Gameboard extends React.Component {
@@ -8,54 +8,15 @@ class Gameboard extends React.Component {
         super(props);
         this.state = {
             gameboard: getNewBoard(),
-            currentTurn: 'l' 
+            currentTurn: 'l',
+            history: [],
+            historyIndex: -1
         }
         
         this.handleCellClick = this.handleCellClick.bind(this);
         this.resetBoard = this.resetBoard.bind(this);
     }
     
-    /**
-     * Check if the move x, y is valid.
-     * @param {number} x 
-     * @param {number} y 
-     */
-    validMove(x, y) {
-        // square can't be already occupied
-        if(this.state.gameboard[y][x] !== ' ') return false;
-        
-        //check up
-        let y_i = y - 1;
-        let oppositeFound = false;
-        let validTop = false;
-        validTop = this.state.gameboard[y_i][x] === this.state.currentTurn;
-        if(validTop) {
-            while(y_i >= 0) {
-                if(this.state.gameboard[y_i][x] !== this.state.currentTurn) {
-                    oppositeFound = true;
-                } else if(this.state.gameboard[y_i][x] === this.state.currentTurn && oppositeFound) {
-                    validTop = true;
-                }
-                y_i -= 1;
-            }
-        } 
-
-        y_i = y + 1;
-        oppositeFound = false;
-        let validBottom = false;
-        while(y_i <= 7) {
-            if(this.state.gameboard[y_i][x] !== this.state.currentTurn) {
-                oppositeFound = true;
-            } else if(this.state.gameboard[y_i][x] === this.state.currentTurn && oppositeFound) {
-                validBottom = true;
-            }
-            y_i += 1;
-        }
-
-        console.log('Valid top is: ' + validTop);
-        console.log('Valid bottom is: ' + validBottom);
-        return true;
-    }
 
     resetBoard() {
         this.setState({
@@ -65,10 +26,14 @@ class Gameboard extends React.Component {
     }
 
     handleCellClick (x, y) {
-        if(this.validMove(x, y)) {
+        const directions = validateMove(x, y, this.state.currentTurn, this.state.gameboard);
+        if(directions.length > 0) {
             let newState = {...this.state};
             newState.gameboard = this.state.gameboard;
+            newState.history.push(this.state.gameboard);
+            newState.historyIndex += 1;
             newState.gameboard[y][x] = this.state.currentTurn;
+            doMoves(directions, newState.gameboard, this.state.currentTurn);
             if(this.state.currentTurn === 'l') {
                 newState.currentTurn = 'd';
             } else {
@@ -93,7 +58,7 @@ class Gameboard extends React.Component {
             return <tr key={y}>{rowCells}</tr>
         })
         return (
-            <div>
+            <div className="column middle">
                 <h1>Othello</h1>
                 <button
                     onClick={this.resetBoard}
