@@ -64,7 +64,7 @@ class Gameboard extends React.Component {
                     onClick={this.resetBoard}
                 >Reset board</button>
                 <div className="board-container">
-                    <table>
+                    <table className="board-table">
                         <tbody>
                             {gameboardTable}
                         </tbody>

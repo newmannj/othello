@@ -4,7 +4,6 @@ test('move is done correctly', () => {
     let board = getNewBoard();
     const directions = validateMove(3, 2, 'd', board);
     const board2 = doMoves(directions, board, 'd');
-    console.log(board2)
 })
 
 test('can place a piece on the first move', () => {

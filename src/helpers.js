@@ -34,7 +34,6 @@ const validateMove = (x, y, tokenColor, board) => {
             }
         }
     }
-    console.log(directions);
     
     //For each direction, keep going until you hit a token of the same color
     //an edge, or an empty square.
