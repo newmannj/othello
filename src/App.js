@@ -1,11 +1,12 @@
-import logo from './logo.svg';
 import './App.css';
-import Gameboard  from './Gameboard';
-import PlayerInfo from './PlayerInfo';
+import Gameboard  from './components/Gameboard';
+import PlayerInfo from './components/PlayerInfo';
+import CreateGame from './components/CreateGame';
 
 function App() {
   return (
     <div className="App">
+        <CreateGame/>
         <PlayerInfo 
           playerName = "Player 1"
           token="d"

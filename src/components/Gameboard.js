@@ -1,6 +1,6 @@
 import React from 'react';
 import GameboardCell from './GameboardCell'; 
-import { getNewBoard, validateMove, doMoves } from './helpers';
+import { getNewBoard, validateMove, doMoves } from '../helpers';
 
 
 class Gameboard extends React.Component {
@@ -40,8 +40,6 @@ class Gameboard extends React.Component {
                 newState.currentTurn = 'l';
             }
             this.setState(newState);
-        } else {
-            alert('bad move! try again :)');
         }
     }
 

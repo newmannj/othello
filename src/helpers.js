@@ -23,7 +23,7 @@ const validateMove = (x, y, tokenColor, board) => {
     //Square cannot be occupied.
     if(board[y][x] !== ' ') return false;
     
-    //Get all posns with valid direction
+    //Get all possible directions, i.e. directions that have a different colored token.
     let directions = [];
     for(let y_i = y - 1; y_i < y + 2; y_i += 1) {
         if(!withinBounds(x, y_i)) continue;
@@ -50,6 +50,9 @@ const validateMove = (x, y, tokenColor, board) => {
                 directions[i].push({x: next_x, y: next_y});
             } else if(board[next_y][next_x] === tokenColor) {
                 directionEnded = true;
+                break;
+            } else {
+                directionEnded = false;
                 break;
             }
             next_x = next_x + x_diff;
