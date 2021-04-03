@@ -1,6 +1,6 @@
 import React from 'react';
 import GameboardCell from './GameboardCell'; 
-import { getNewBoard, validateMove, doMoves } from '../helpers';
+import { getNewBoard, validateMove, doMoves } from '../../helpers';
 
 
 class Gameboard extends React.Component {
