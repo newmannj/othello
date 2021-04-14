@@ -57,10 +57,7 @@ class Gameboard extends React.Component {
         })
         return (
             <div className="column middle">
-                <h1>Othello</h1>
-                <button
-                    onClick={this.resetBoard}
-                >Reset board</button>
+                <h2>Othello</h2>
                 <div className="board-container">
                     <table className="board-table">
                         <tbody>
