@@ -8,6 +8,7 @@ class Gameboard extends React.Component {
         super(props);
         this.state = {
             gameboard: getNewBoard(),
+            availableSquares: 64,
             currentTurn: 'l',
             history: [],
             historyIndex: -1
@@ -15,6 +16,13 @@ class Gameboard extends React.Component {
         
         this.handleCellClick = this.handleCellClick.bind(this);
         this.resetBoard = this.resetBoard.bind(this);
+    }
+
+    checkGameEnded() {
+        //Easiest check
+        if(this.state.availableSquares === 0) return true;
+        //Check if both players have no more moves
+        //
     }
     
 
@@ -33,6 +41,7 @@ class Gameboard extends React.Component {
             newState.history.push(this.state.gameboard);
             newState.historyIndex += 1;
             newState.gameboard[y][x] = this.state.currentTurn;
+            newState.availableSquares = this.state.availableSquares - 1;
             doMoves(directions, newState.gameboard, this.state.currentTurn);
             if(this.state.currentTurn === 'l') {
                 newState.currentTurn = 'd';
@@ -41,6 +50,8 @@ class Gameboard extends React.Component {
             }
             this.setState(newState);
         }
+        //After each move, check if the game has ended,
+        this.checkGameEnded();
     }
 
     render() {
@@ -56,8 +67,8 @@ class Gameboard extends React.Component {
             return <tr key={y}>{rowCells}</tr>
         })
         return (
-            <div className="column middle">
-                <h2>Othello</h2>
+            <div className="column middle" style={{textAlign: "center"}}>
+                <h2 >Othello</h2>
                 <div className="board-container">
                     <table className="board-table">
                         <tbody>

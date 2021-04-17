@@ -1,0 +1,5 @@
+.GameboardCell {
+    background-color: green;
+    border: solid 1px black;
+    margin: 1px 1px;
+}
